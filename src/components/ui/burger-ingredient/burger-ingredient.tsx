@@ -9,14 +9,21 @@ import {
 } from '@zlden/react-developer-burger-ui-components';
 
 import { TBurgerIngredientUIProps } from './type';
+import { useDispatch } from '../../../services/store';
+import { openModal } from '../../../features/modalSlice';
 
 export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
   ({ ingredient, count, handleAdd, locationState }) => {
     const { image, price, name, _id } = ingredient;
+    const dispatch = useDispatch();
+
+    const openModalHandler = () =>
+      dispatch(openModal({ item: ingredient, type: 'ingredient' }));
 
     return (
       <li className={styles.container}>
         <Link
+          onClick={openModalHandler}
           className={styles.article}
           to={`/ingredients/${_id}`}
           state={locationState}
