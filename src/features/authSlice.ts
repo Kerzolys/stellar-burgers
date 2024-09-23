@@ -16,8 +16,6 @@ import { getCookie, setCookie } from '../utils/cookie';
 
 type AuthState = {
   user: TUser | null;
-  accessToken: string;
-  refreshToken: string;
   isAuthenticated: boolean;
   success: boolean;
   loading: boolean;
@@ -26,8 +24,6 @@ type AuthState = {
 
 const initialState: AuthState = {
   user: null,
-  accessToken: '',
-  refreshToken: '',
   isAuthenticated: false,
   success: false,
   loading: false,
@@ -64,16 +60,24 @@ export const loginUserAsync = createAsyncThunk(
 
 export const initializeAuth = createAsyncThunk(
   'auth/initialize',
-  async (_, { dispatch }) => {
-    const accessToken = getCookie('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken');
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const accessToken = getCookie('accessToken');
 
-    if (refreshToken && accessToken) {
-      getUserApi()
-        .then((user) => dispatch(setUser(user.user)))
-        .finally(() => dispatch(setIsAuthenticated(true)));
-    } else {
-      dispatch(setIsAuthenticated(true));
+      if (accessToken) {
+        const response = await getUserApi();
+        if (response.user) {
+          dispatch(setUser(response.user));
+          dispatch(setIsAuthenticated(true));
+        } else {
+          return rejectWithValue('Ошибка загрузки данных пользователя');
+        }
+        return response;
+      } else {
+        dispatch(setIsAuthenticated(true));
+      }
+    } catch (error) {
+      return rejectWithValue('Ошибка авторизации');
     }
   }
 );
@@ -127,8 +131,8 @@ const authSlice = createSlice({
           state.user = action.payload.user;
           state.isAuthenticated = true;
           state.success = true;
-          state.accessToken = action.payload.accessToken;
-          state.refreshToken = action.payload.refreshToken;
+          // state.accessToken = action.payload.accessToken;
+          // state.refreshToken = action.payload.refreshToken;
         }
       )
       .addCase(registerUserAsync.rejected, (state, action) => {
@@ -146,11 +150,10 @@ const authSlice = createSlice({
           state.loading = false;
           state.error = null;
           state.user = action.payload.user;
-          state.accessToken = action.payload.accessToken;
-          state.refreshToken = action.payload.refreshToken;
+          // state.accessToken = action.payload.accessToken;
+          // state.refreshToken = action.payload.refreshToken;
           state.isAuthenticated = true;
           state.success = true;
-          console.log(localStorage, document.cookie);
         }
       )
       .addCase(loginUserAsync.rejected, (state, action) => {
@@ -158,24 +161,6 @@ const authSlice = createSlice({
         state.error = action.payload as string;
         state.success = false;
       })
-      // .addCase(initializeAuth.pending, (state) => {
-      //   state.loading = true;
-      //   state.error = null;
-      // })
-      // .addCase(initializeAuth.fulfilled, (state, action) => {
-      //   const { accessToken, refreshToken, user } = action.payload;
-      //   state.loading = false;
-      //   state.error = null;
-      //   state.accessToken = accessToken as string;
-      //   state.refreshToken = refreshToken as string;
-      //   state.user = user;
-      //   state.isAuthenticated = !!accessToken;
-      //   console.log(state.isAuthenticated);
-      // })
-      // .addCase(initializeAuth.rejected, (state, action) => {
-      //   state.loading = false;
-      //   state.error = action.payload as string;
-      // })
       .addCase(updateUserAsync.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -203,12 +188,8 @@ const authSlice = createSlice({
       })
       .addCase(logoutAsync.fulfilled, (state) => {
         state.user = null;
-        state.accessToken = '';
-        state.refreshToken = '';
-        // state.isAuthenticated = false;
         document.cookie = 'accessToken=;';
         localStorage.removeItem('refreshToken');
-        console.log(state.isAuthenticated);
       })
       .addCase(logoutAsync.rejected, (state, action) => {
         state.loading = false;

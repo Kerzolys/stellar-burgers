@@ -30,7 +30,7 @@ export const BurgerConstructor: FC = () => {
     const ingredientsIds = ingredients.map((item: TIngredient) => item._id);
     const orderData = [bun._id, ...ingredientsIds];
     console.log(isAuthenticated);
-    if (!isAuthenticated && !user) {
+    if (!user) {
       navigate('/login', { state: { from: location } });
     } else {
       dispatch(orderBurgerAsync(orderData));

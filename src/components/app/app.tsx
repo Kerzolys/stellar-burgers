@@ -29,8 +29,6 @@ const App = () => {
   const modal = useSelector(modalSelector);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated, user } = useSelector(authSelector);
-  console.log(isAuthenticated, user);
 
   const closeModalHander = () => {
     dispatch(closeModal());
