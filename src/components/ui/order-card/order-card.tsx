@@ -17,7 +17,11 @@ export const OrderCardUI: FC<OrderCardUIProps> = memo(
     const dispatch = useDispatch();
 
     const openModalHandler = () => {
-      dispatch(openModal({ item: orderInfo, type: 'order' }));
+      const serializedOrderInfo = {
+        ...orderInfo,
+        date: orderInfo.date.toISOString()
+      };
+      dispatch(openModal({ item: serializedOrderInfo, type: 'order' }));
     };
     return (
       <Link

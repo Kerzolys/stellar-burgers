@@ -150,8 +150,6 @@ const authSlice = createSlice({
           state.loading = false;
           state.error = null;
           state.user = action.payload.user;
-          // state.accessToken = action.payload.accessToken;
-          // state.refreshToken = action.payload.refreshToken;
           state.isAuthenticated = true;
           state.success = true;
         }

@@ -13,7 +13,13 @@ import '../../index.css';
 import styles from './app.module.css';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
-import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams
+} from 'react-router-dom';
 import {
   OnlyAuth,
   OnlyUnAuth,
@@ -29,6 +35,8 @@ const App = () => {
   const modal = useSelector(modalSelector);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const background = location.state && location.state?.background;
 
   const closeModalHander = () => {
     dispatch(closeModal());
@@ -46,7 +54,7 @@ const App = () => {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Routes>
+      <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
         <Route path='/login' element={<OnlyUnAuth component={<Login />} />} />
@@ -56,47 +64,44 @@ const App = () => {
         <Route path='/profile' element={<OnlyAuth component={<Profile />} />} />
         <Route
           path='/profile/orders'
-          element={
-            // <ProtectedRoute>
-            <OnlyAuth component={<ProfileOrders />} />
-
-            // </ProtectedRoute>
-          }
+          element={<OnlyAuth component={<ProfileOrders />} />}
         />
         <Route path='*' element={<NotFound404 />} />
+
+        {/* <Route path='/feed/:number' element={<OrderInfo />} />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route
-          path='/feed/:number'
-          element={
-            modal.isModalOpen ? (
-              <FeedOrderModal closeModalHandler={closeModalHander} />
-            ) : null
-          }
-        />
-        {
+          path='/profile/orders/:number'
+          element={<OnlyAuth component={<OrderInfo />} />}
+        /> */}
+      </Routes>
+      {background && (
+        <Routes>
+          <Route
+            path='/feed/:number'
+            element={<FeedOrderModal closeModalHandler={closeModalHander} />}
+          />
           <Route
             path='/ingredients/:id'
             element={
-              modal.isModalOpen ? (
-                <Modal onClose={closeModalHander} title='Детали ингредиента'>
-                  <IngredientDetails />
-                </Modal>
-              ) : null
+              <Modal onClose={closeModalHander} title='Детали ингредиента'>
+                <IngredientDetails />
+              </Modal>
             }
           />
-        }
-        <Route
-          path='/profile/orders/:number'
-          element={
-            modal.isModalOpen ? (
+
+          <Route
+            path='/profile/orders/:number'
+            element={
               <OnlyAuth
                 component={
                   <FeedOrderModal closeModalHandler={closeModalHander} />
                 }
               />
-            ) : null
-          }
-        />
-      </Routes>
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 };

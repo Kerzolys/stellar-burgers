@@ -19,17 +19,17 @@ export const BurgerConstructor: FC = () => {
   const { bun, ingredients } = useSelector(burgerConstructorSelector);
   const orderRequest = useSelector(orderSelector);
   const [orderLoading, setOrderLoading] = useState(false);
-  const { isAuthenticated, user } = useSelector(authSelector);
+  const { user } = useSelector(authSelector);
   const navigate = useNavigate();
   const location = useLocation();
 
   const orderModalData = orderRequest.order;
+  // console.log(ingredients)
 
   const onOrderClick = () => {
     if (!bun || orderLoading) return;
     const ingredientsIds = ingredients.map((item: TIngredient) => item._id);
     const orderData = [bun._id, ...ingredientsIds];
-    console.log(isAuthenticated);
     if (!user) {
       navigate('/login', { state: { from: location } });
     } else {

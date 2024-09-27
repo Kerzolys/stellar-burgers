@@ -11,12 +11,10 @@ export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
   ({ ingredient, index, totalItems }) => {
     const dispatch = useDispatch();
     const handleMoveDown = () => {
-      console.log('moved down', index);
       dispatch(moveIngredient({ from: index, to: index + 1 }));
     };
 
     const handleMoveUp = () => {
-      console.log('moved up', index);
       dispatch(moveIngredient({ from: index, to: index - 1 }));
     };
 

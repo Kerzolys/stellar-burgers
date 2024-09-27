@@ -107,6 +107,7 @@ const orderSlice = createSlice({
           state.loading = false;
           state.error = null;
           state.orders = action.payload;
+          console.log(state.orders);
         }
       )
       .addCase(getOrdersAsync.rejected, (state, action) => {

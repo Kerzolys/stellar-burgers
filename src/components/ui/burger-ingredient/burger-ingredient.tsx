@@ -17,8 +17,9 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
     const { image, price, name, _id } = ingredient;
     const dispatch = useDispatch();
 
-    const openModalHandler = () =>
+    const openModalHandler = () => {
       dispatch(openModal({ item: ingredient, type: 'ingredient' }));
+    };
 
     return (
       <li className={styles.container}>

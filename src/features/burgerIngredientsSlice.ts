@@ -5,13 +5,9 @@ import { RootState } from 'src/services/store';
 
 export const getIngredientsAsync = createAsyncThunk<TIngredient[], void>(
   'ingredients/getIngredients',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await getIngredientsApi();
-      return response;
-    } catch (error) {
-      return rejectWithValue('Ошибка получения данных');
-    }
+  async () => {
+    const response = await getIngredientsApi();
+    return response;
   }
 );
 
@@ -56,5 +52,10 @@ export const burgerIngredientsSelector = (state: RootState) =>
   state.burgerIngredients.ingredients;
 export const loadingSelector = (state: RootState) =>
   state.burgerIngredients.loading;
+
+// export const selectIngredientById = (state: RootState, id?: string) =>
+//   state.burgerIngredients.ingredients.find(
+//     (ingredient) => ingredient._id === id
+//   );
 
 export default burgerIngredientsSlice.reducer;
