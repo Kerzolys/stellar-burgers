@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { TIngredient, TOrder } from '@utils-types';
-import { RootState } from '../services/store';
+import { RootState } from '../../services/store';
 
 type ModalType = 'ingredient' | 'order';
 
@@ -10,7 +10,7 @@ type ModalState = {
   type: ModalType | null;
 };
 
-const initialState: ModalState = {
+export const initialState: ModalState = {
   selected: null,
   isModalOpen: false,
   type: null

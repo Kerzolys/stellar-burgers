@@ -7,7 +7,7 @@ import {
 } from '@api';
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder, TOrdersData } from '@utils-types';
-import { RootState } from '../services/store';
+import { RootState } from '../../services/store';
 
 type OrderState = {
   order: TOrder | null;
@@ -20,7 +20,7 @@ type OrderState = {
   success: boolean;
 };
 
-const initialState: OrderState = {
+export const initialState: OrderState = {
   order: null,
   orders: [],
   today: 0,
@@ -107,7 +107,6 @@ const orderSlice = createSlice({
           state.loading = false;
           state.error = null;
           state.orders = action.payload;
-          console.log(state.orders);
         }
       )
       .addCase(getOrdersAsync.rejected, (state, action) => {

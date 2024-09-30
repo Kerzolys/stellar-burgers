@@ -11,8 +11,8 @@ import {
 } from '@api';
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { RootState } from '../services/store';
-import { getCookie, setCookie } from '../utils/cookie';
+import { RootState } from '../../services/store';
+import { getCookie, setCookie } from '../../utils/cookie';
 
 type AuthState = {
   user: TUser | null;
@@ -22,7 +22,7 @@ type AuthState = {
   error: string | null;
 };
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
   success: false,

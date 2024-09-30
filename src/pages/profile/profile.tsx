@@ -2,7 +2,7 @@ import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from '../../services/store';
-import { authSelector, updateUserAsync } from '../../features/authSlice';
+import { authSelector, updateUserAsync } from '../../features/auth/authSlice';
 
 export const Profile: FC = () => {
   const { user } = useSelector(authSelector);

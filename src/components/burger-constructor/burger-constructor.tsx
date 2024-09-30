@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from '../../services/store';
 import {
   burgerConstructorSelector,
   resetAllIngredients
-} from '../../features/burgerConstructorSlice';
+} from '../../features/burgerConstructor/burgerConstructorSlice';
 import {
   orderBurgerAsync,
   orderSelector,
   resetOrder
-} from '../../features/orderSlice';
-import { authSelector } from '../../features/authSlice';
+} from '../../features/order/orderSlice';
+import { authSelector } from '../../features/auth/authSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {

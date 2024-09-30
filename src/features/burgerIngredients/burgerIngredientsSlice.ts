@@ -5,9 +5,13 @@ import { RootState } from 'src/services/store';
 
 export const getIngredientsAsync = createAsyncThunk<TIngredient[], void>(
   'ingredients/getIngredients',
-  async () => {
-    const response = await getIngredientsApi();
-    return response;
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await getIngredientsApi();
+      return response;
+    } catch (error) {
+      return rejectWithValue('Ошибка получения данных');
+    }
   }
 );
 
@@ -17,7 +21,7 @@ type IngredientsState = {
   error: string | null;
 };
 
-const initialState: IngredientsState = {
+export const initialState: IngredientsState = {
   ingredients: [],
   loading: false,
   error: null

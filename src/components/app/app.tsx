@@ -26,10 +26,10 @@ import {
   ProtectedRoute
 } from '../protected-route/protected-route';
 import { useDispatch, useSelector } from '../../services/store';
-import { closeModal, modalSelector } from '../../features/modalSlice';
+import { closeModal, modalSelector } from '../../features/modal/modalSlice';
 import { useEffect } from 'react';
-import { authSelector, initializeAuth } from '../../features/authSlice';
-import { getIngredientsAsync } from '../../features/burgerIngredientsSlice';
+import { authSelector, initializeAuth } from '../../features/auth/authSlice';
+import { getIngredientsAsync } from '../../features/burgerIngredients/burgerIngredientsSlice';
 
 const App = () => {
   const modal = useSelector(modalSelector);
@@ -37,6 +37,8 @@ const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const background = location.state && location.state?.background;
+
+  const { user } = useSelector(authSelector);
 
   const closeModalHander = () => {
     dispatch(closeModal());
@@ -49,7 +51,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(initializeAuth());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>

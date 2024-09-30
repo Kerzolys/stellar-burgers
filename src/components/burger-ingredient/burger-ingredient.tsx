@@ -1,10 +1,10 @@
-import { FC, memo } from 'react';
+import { FC, SyntheticEvent, memo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { BurgerIngredientUI } from '@ui';
 import { TBurgerIngredientProps } from './type';
 import { useDispatch } from '../../services/store';
-import { addIngredient } from '../../features/burgerConstructorSlice';
+import { addIngredient } from '../../features/burgerConstructor/burgerConstructorSlice';
 
 export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
   ({ ingredient, count }) => {

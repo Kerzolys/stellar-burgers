@@ -10,7 +10,7 @@ import styles from './order-card.module.css';
 import { OrderCardUIProps } from './type';
 import { OrderStatus } from '@components';
 import { useDispatch } from '../../../services/store';
-import { openModal } from '../../../features/modalSlice';
+import { openModal } from '../../../features/modal/modalSlice';
 
 export const OrderCardUI: FC<OrderCardUIProps> = memo(
   ({ orderInfo, maxIngredients, locationState }) => {

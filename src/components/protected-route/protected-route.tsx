@@ -1,4 +1,4 @@
-import { authSelector } from '../../features/authSlice';
+import { authSelector } from '../../features/auth/authSlice';
 import { useSelector } from '../../services/store';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Preloader } from '../ui/preloader';

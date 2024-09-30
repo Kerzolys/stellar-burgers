@@ -3,8 +3,8 @@ import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient, TOrder } from '@utils-types';
 import { useSelector } from '../../services/store';
-import { burgerIngredientsSelector } from '../../features/burgerIngredientsSlice';
-import { modalSelector } from '../../features/modalSlice';
+import { burgerIngredientsSelector } from '../../features/burgerIngredients/burgerIngredientsSlice';
+import { modalSelector } from '../../features/modal/modalSlice';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */

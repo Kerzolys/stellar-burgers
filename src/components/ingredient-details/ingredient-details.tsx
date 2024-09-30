@@ -2,12 +2,12 @@ import { FC, useEffect } from 'react';
 import { Preloader } from '../ui/preloader';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
 import { useDispatch, useSelector } from '../../services/store';
-import { modalSelector } from '../../features/modalSlice';
+import { modalSelector } from '../../features/modal/modalSlice';
 import { TIngredient } from '@utils-types';
 import {
   burgerIngredientsSelector
   // selectIngredientById
-} from '../../features/burgerIngredientsSlice';
+} from '../../features/burgerIngredients/burgerIngredientsSlice';
 import { useParams } from 'react-router-dom';
 
 export const IngredientDetails: FC = () => {

@@ -10,7 +10,7 @@ type ConstructorState = {
   error: string | null;
 };
 
-const initialState: ConstructorState = {
+export const initialState: ConstructorState = {
   bun: null,
   ingredients: [],
   isIngredientsLoading: false,
