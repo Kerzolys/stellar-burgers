@@ -6,14 +6,21 @@ import { ForgotPasswordUI } from '@ui-pages';
 
 export const ForgotPassword: FC = () => {
   const [email, setEmail] = useState('');
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
+  const validateEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
 
     setError(null);
+
+    if (!validateEmail(email)) {
+      setError('Введите корректный email');
+      return;
+    }
+
     forgotPasswordApi({ email })
       .then(() => {
         localStorage.setItem('resetPassword', 'true');
@@ -24,7 +31,7 @@ export const ForgotPassword: FC = () => {
 
   return (
     <ForgotPasswordUI
-      errorText={error?.message}
+      errorText={error as string}
       email={email}
       setEmail={setEmail}
       handleSubmit={handleSubmit}

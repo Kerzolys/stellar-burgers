@@ -1,21 +1,17 @@
 import { FC, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
-import { TIngredient } from '@utils-types';
+import { TIngredient, TOrder } from '@utils-types';
+import { useSelector } from '../../services/store';
+import { burgerIngredientsSelector } from '../../features/burgerIngredients/burgerIngredientsSlice';
+import { modalSelector } from '../../features/modal/modalSlice';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
 
-  const ingredients: TIngredient[] = [];
+  const { selected, type } = useSelector(modalSelector);
+  const orderData = selected as TOrder;
+  const ingredients: TIngredient[] = useSelector(burgerIngredientsSelector);
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
@@ -59,7 +55,7 @@ export const OrderInfo: FC = () => {
     };
   }, [orderData, ingredients]);
 
-  if (!orderInfo) {
+  if (!orderInfo || type !== 'order') {
     return <Preloader />;
   }
 
