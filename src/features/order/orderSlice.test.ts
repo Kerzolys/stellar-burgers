@@ -1,4 +1,3 @@
-import { TOrder, TOrdersData } from '@utils-types';
 import orderReducer, {
   initialState,
   getAllOrdersAsync,
@@ -6,6 +5,11 @@ import orderReducer, {
   orderBurgerAsync
 } from './orderSlice';
 import { TNewOrderResponse } from '@api';
+import {
+  testFeed,
+  testUserOrder,
+  testUserOrders
+} from '../../utils/testConstants';
 
 jest.mock('@api', () => ({
   getFeedsApi: jest.fn(),
@@ -31,36 +35,7 @@ describe('тестируем orderSlice', () => {
       });
     });
     it('проверяем успешный результат получения заказов', async () => {
-      const mockOrders = {
-        orders: [
-          {
-            _id: '66fa426e119d45001b50a6d4',
-            ingredients: [
-              '643d69a5c3f7b9001cfa093d',
-              '643d69a5c3f7b9001cfa0940'
-            ],
-            status: 'done',
-            name: 'Флюоресцентный метеоритный бургер',
-            createdAt: '2024-09-30T06:17:18.765Z',
-            updatedAt: '2024-09-30T06:17:19.596Z',
-            number: 54644
-          },
-          {
-            _id: '66fa4255119d45001b50a6d3',
-            ingredients: [
-              '643d69a5c3f7b9001cfa093c',
-              '643d69a5c3f7b9001cfa093f'
-            ],
-            status: 'done',
-            name: 'Краторный бессмертный бургер',
-            createdAt: '2024-09-30T06:16:53.122Z',
-            updatedAt: '2024-09-30T06:16:53.980Z',
-            number: 54643
-          }
-        ],
-        total: 54318,
-        totalToday: 118
-      };
+      const mockOrders = testFeed;
       const action = {
         type: getAllOrdersAsync.fulfilled.type,
         payload: mockOrders
@@ -104,20 +79,7 @@ describe('тестируем orderSlice', () => {
         });
       });
       it('проверяем успешный результат получения заказов пользователя', async () => {
-        const mockOrders = [
-          {
-            _id: '66fa426e119d45001b50a6d4',
-            ingredients: [
-              '643d69a5c3f7b9001cfa093d',
-              '643d69a5c3f7b9001cfa0940'
-            ],
-            status: 'done',
-            name: 'Флюоресцентный метеоритный бургер',
-            createdAt: '2024-09-30T06:17:18.765Z',
-            updatedAt: '2024-09-30T06:17:19.596Z',
-            number: 54644
-          }
-        ];
+        const mockOrders = testUserOrders;
         const action = {
           type: getOrdersAsync.fulfilled.type,
           payload: mockOrders
@@ -160,58 +122,7 @@ describe('тестируем orderSlice', () => {
         });
       });
       it('проверяем успешный результат создания заказа', async () => {
-        const mockOrder = {
-          name: 'Краторный люминесцентный бургер',
-          order: {
-            ingredients: [
-              {
-                _id: '643d69a5c3f7b9001cfa093e',
-                name: 'Филе Люминесцентного тетраодонтимформа',
-                type: 'main',
-                proteins: 44,
-                fat: 26,
-                carbohydrates: 85,
-                calories: 643,
-                price: 988,
-                image: 'https://code.s3.yandex.net/react/code/meat-03.png',
-                image_mobile:
-                  'https://code.s3.yandex.net/react/code/meat-03-mobile.png',
-                image_large:
-                  'https://code.s3.yandex.net/react/code/meat-03-large.png',
-                __v: 0
-              },
-              {
-                _id: '643d69a5c3f7b9001cfa093c',
-                name: 'Краторная булка N-200i',
-                type: 'bun',
-                proteins: 80,
-                fat: 24,
-                carbohydrates: 53,
-                calories: 420,
-                price: 1255,
-                image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-                image_mobile:
-                  'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
-                image_large:
-                  'https://code.s3.yandex.net/react/code/bun-02-large.png',
-                __v: 0
-              }
-            ],
-            _id: '66fa3580119d45001b50a6bc',
-            owner: {
-              name: 'Gleb Khokhlov',
-              email: 'kerzolys@gmail.com',
-              createdAt: '2024-09-18T14:53:58.967Z',
-              updatedAt: '2024-09-22T11:03:25.417Z'
-            },
-            status: 'done',
-            name: 'Краторный люминесцентный бургер',
-            createdAt: '2024-09-30T05:22:08.981Z',
-            updatedAt: '2024-09-30T05:22:09.857Z',
-            number: 54637,
-            price: 2243
-          }
-        };
+        const mockOrder = testUserOrder;
 
         const action = {
           type: orderBurgerAsync.fulfilled.type,

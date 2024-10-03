@@ -1,3 +1,4 @@
+import { testIngredient } from '../../utils/testConstants';
 import burgerIngredientsReducer, {
   getIngredientsAsync,
   initialState
@@ -27,22 +28,7 @@ describe('тестируем burgerIngredientsSlice', () => {
     });
   });
   it('проверяем успешный результат асинхронного экшена ', async () => {
-    const mockIngredients: TIngredient[] = [
-      {
-        _id: '123',
-        name: 'Соус Spicy-X',
-        type: 'sauce',
-        proteins: 30,
-        fat: 20,
-        carbohydrates: 40,
-        calories: 30,
-        price: 90,
-        image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
-        image_mobile:
-          'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
-        image_large: 'https://code.s3.yandex.net/react/code/sauce-02-large.png'
-      }
-    ];
+    const mockIngredients: TIngredient[] = [testIngredient];
     const action = {
       type: getIngredientsAsync.fulfilled.type,
       payload: mockIngredients
@@ -50,9 +36,9 @@ describe('тестируем burgerIngredientsSlice', () => {
     const newState = burgerIngredientsReducer(initialState, action);
 
     expect(newState).toEqual({
+      ...initialState,
       ingredients: mockIngredients,
-      loading: false,
-      error: null
+      loading: false
     });
   });
   it('проверяем ошибку при асинхронном экшене ', async () => {

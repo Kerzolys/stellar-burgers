@@ -5,6 +5,7 @@ import authReducer, {
   logoutAsync,
   registerUserAsync
 } from './authSlice';
+import { testUser } from '../../utils/testConstants';
 jest.mock('@api', () => ({
   getUserApi: jest.fn(),
   loginUserApi: jest.fn(),
@@ -37,17 +38,7 @@ describe('тестируем authSlice', () => {
       });
     });
     it('проверяем успешную регистрацию', async () => {
-      const mockUser: TAuthResponse = {
-        success: true,
-        user: {
-          email: 'kerzolys@yandex.ru',
-          name: 'gleb'
-        },
-        accessToken:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmE4ZjU3MTE5ZDQ1MDAxYjUwYTdkMSIsImlhdCI6MTcyNzY5NjcyNywiZXhwIjoxNzI3Njk3OTI3fQ.d4px2EAryBAjE3ljvbz6AOAwDXrldZ_CWUWIm6xA8ew',
-        refreshToken:
-          'a29bee7a9aa925bfc22da2f69e28c9b449a90aeef5aa8bca3a13ab32f3c43fc3153cd5dd900cb45a'
-      };
+      const mockUser: TAuthResponse = testUser;
       const action = {
         type: registerUserAsync.fulfilled.type,
         payload: mockUser
@@ -90,17 +81,7 @@ describe('тестируем authSlice', () => {
       });
     });
     it('проверяем успешный результат входа пользователя', async () => {
-      const mockUser: TAuthResponse = {
-        success: true,
-        accessToken:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmE4ZjU3MTE5ZDQ1MDAxYjUwYTdkMSIsImlhdCI6MTcyNzY5NzA3MiwiZXhwIjoxNzI3Njk4MjcyfQ.Uka7S_ipivarpOCP3m9be8DWsh4rtMWqmRYnxEXRevo',
-        refreshToken:
-          '1b55437c0a1e00cb95ef4d9e745ae7b34d693265ceb237132c4f6598d8443cc507ecc7e76fce2736',
-        user: {
-          email: 'kerzolys@yandex.ru',
-          name: 'gleb'
-        }
-      };
+      const mockUser: TAuthResponse = testUser;
       const action = { type: loginUserAsync.fulfilled.type, payload: mockUser };
       const newState = await authReducer(initialState, action);
 

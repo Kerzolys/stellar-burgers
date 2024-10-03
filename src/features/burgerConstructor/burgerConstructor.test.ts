@@ -6,6 +6,11 @@ import burgerConstructorReducer, {
   removeIngredient,
   resetAllIngredients
 } from './burgerConstructorSlice';
+import {
+  testBun,
+  testConstructorIngredients,
+  testIngredient
+} from '../../utils/testConstants';
 describe('тестируем burgerConstructorSlice', () => {
   describe('тестируем добавление ингридиента в конструктор', () => {
     it('проверяем начальное состояние конструктора', () => {
@@ -14,20 +19,7 @@ describe('тестируем burgerConstructorSlice', () => {
       );
     });
     it('добавляем ингредиент в конструктор', () => {
-      const newIngredient: TIngredient = {
-        _id: '643d69a5c3f7b9001cfa0942',
-        name: 'Соус Spicy-X',
-        type: 'sauce',
-        proteins: 30,
-        fat: 20,
-        carbohydrates: 40,
-        calories: 30,
-        price: 90,
-        image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
-        image_mobile:
-          'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
-        image_large: 'https://code.s3.yandex.net/react/code/sauce-02-large.png'
-      };
+      const newIngredient: TIngredient = testIngredient;
       const newState = burgerConstructorReducer(
         initialState,
         addIngredient(newIngredient)
@@ -39,24 +31,7 @@ describe('тестируем burgerConstructorSlice', () => {
   describe('тестируем удаление ингридиента из конструктора', () => {
     const initialTestState: typeof initialState = {
       bun: null,
-      ingredients: [
-        {
-          _id: '643d69a5c3f7b9001cfa0942',
-          id: '643d69a5c3f7b9001cfa0942',
-          name: 'Соус Spicy-X',
-          type: 'sauce',
-          proteins: 30,
-          fat: 20,
-          carbohydrates: 40,
-          calories: 30,
-          price: 90,
-          image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
-          image_mobile:
-            'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
-          image_large:
-            'https://code.s3.yandex.net/react/code/sauce-02-large.png'
-        }
-      ],
+      ingredients: [testConstructorIngredients[0]],
       isIngredientsLoading: false,
       error: null
     };
@@ -72,39 +47,7 @@ describe('тестируем burgerConstructorSlice', () => {
   describe('тестируем изменение порядка ингредиентов в конструкторе', () => {
     const initialTestState: typeof initialState = {
       bun: null,
-      ingredients: [
-        {
-          _id: '643d69a5c3f7b9001cfa0942',
-          id: '643d69a5c3f7b9001cfa0942',
-          name: 'Соус Spicy-X',
-          type: 'sauce',
-          proteins: 30,
-          fat: 20,
-          carbohydrates: 40,
-          calories: 30,
-          price: 90,
-          image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
-          image_mobile:
-            'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
-          image_large:
-            'https://code.s3.yandex.net/react/code/sauce-02-large.png'
-        },
-        {
-          _id: '643d69a5c3f7b9001cfa093e',
-          id: '643d69a5c3f7b9001cfa093e',
-          name: 'Филе Люминесцентного тетраодонтимформа',
-          type: 'main',
-          proteins: 44,
-          fat: 26,
-          carbohydrates: 85,
-          calories: 643,
-          price: 988,
-          image: 'https://code.s3.yandex.net/react/code/meat-03.png',
-          image_mobile:
-            'https://code.s3.yandex.net/react/code/meat-03-mobile.png',
-          image_large: 'https://code.s3.yandex.net/react/code/meat-03-large.png'
-        }
-      ],
+      ingredients: testConstructorIngredients,
       isIngredientsLoading: false,
       error: null
     };
@@ -120,53 +63,8 @@ describe('тестируем burgerConstructorSlice', () => {
   });
   describe('тестируем сброс всех ингредиентов в конструкторе', () => {
     const initialTestState: typeof initialState = {
-      bun: {
-        _id: '643d69a5c3f7b9001cfa093c',
-        id: '643d69a5c3f7b9001cfa093c',
-        name: 'Краторная булка N-200i',
-        type: 'bun',
-        proteins: 80,
-        fat: 24,
-        carbohydrates: 53,
-        calories: 420,
-        price: 1255,
-        image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-        image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
-        image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png'
-      },
-      ingredients: [
-        {
-          _id: '643d69a5c3f7b9001cfa0942',
-          id: '643d69a5c3f7b9001cfa0942',
-          name: 'Соус Spicy-X',
-          type: 'sauce',
-          proteins: 30,
-          fat: 20,
-          carbohydrates: 40,
-          calories: 30,
-          price: 90,
-          image: 'https://code.s3.yandex.net/react/code/sauce-02.png',
-          image_mobile:
-            'https://code.s3.yandex.net/react/code/sauce-02-mobile.png',
-          image_large:
-            'https://code.s3.yandex.net/react/code/sauce-02-large.png'
-        },
-        {
-          _id: '643d69a5c3f7b9001cfa093e',
-          id: '643d69a5c3f7b9001cfa093e',
-          name: 'Филе Люминесцентного тетраодонтимформа',
-          type: 'main',
-          proteins: 44,
-          fat: 26,
-          carbohydrates: 85,
-          calories: 643,
-          price: 988,
-          image: 'https://code.s3.yandex.net/react/code/meat-03.png',
-          image_mobile:
-            'https://code.s3.yandex.net/react/code/meat-03-mobile.png',
-          image_large: 'https://code.s3.yandex.net/react/code/meat-03-large.png'
-        }
-      ],
+      bun: testBun,
+      ingredients: testConstructorIngredients,
       isIngredientsLoading: false,
       error: null
     };
