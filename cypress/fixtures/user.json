@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "accessToken": "testToken",
+  "refreshToken": "refreshTestToken",
+  "user": {
+      "email": "kerzolys@gmail.com",
+      "name": "Gleb Khokhlov"
+  }
+}
