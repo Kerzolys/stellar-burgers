@@ -171,10 +171,13 @@ describe('тестируем burgerConstructorSlice', () => {
       error: null
     };
     it('сбрасываем все ингредиенты в конструкторе', () => {
-      const newState = burgerConstructorReducer(initialTestState, resetAllIngredients());
+      const newState = burgerConstructorReducer(
+        initialTestState,
+        resetAllIngredients()
+      );
 
       expect(newState.bun).toBeNull();
       expect(newState.ingredients.length).toEqual(0);
-    })
+    });
   });
 });

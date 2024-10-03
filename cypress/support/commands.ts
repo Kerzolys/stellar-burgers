@@ -9,6 +9,15 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 //
+
+Cypress.Commands.add('addIngredient', (id: string) => {
+  cy.get(`[data-cy-add='${id}']`)
+    .should('exist')
+    .find('button')
+    .contains('Добавить')
+    .click();
+});
+
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
@@ -28,10 +37,24 @@
 // declare global {
 //   namespace Cypress {
 //     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
+//       login(email: string, password: string): Chainable<void>;
+//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>;
+//       dismiss(
+//         subject: string,
+//         options?: Partial<TypeOptions>
+//       ): Chainable<Element>;
+//       visit(
+//         originalFn: CommandOriginalFn,
+//         url: string,
+//         options: Partial<VisitOptions>
+//       ): Chainable<Element>;
+//       addIngredient(id: string): Chainable<Element>;
 //     }
 //   }
 // }
+
+declare namespace Cypress {
+  interface Chainable {
+    addIngredient(id: string): Chainable<Element>;
+  }
+}

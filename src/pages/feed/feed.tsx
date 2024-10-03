@@ -3,7 +3,10 @@ import { FeedUI } from '@ui-pages';
 import { FC, useEffect } from 'react';
 // import { getAllOrdersAsync, ordersSelector } from '../../features/ordersSlice';
 import { useDispatch, useSelector } from '../../services/store';
-import { getAllOrdersAsync, orderSelector } from '../../features/order/orderSlice';
+import {
+  getAllOrdersAsync,
+  orderSelector
+} from '../../features/order/orderSlice';
 
 export const Feed: FC = () => {
   /** TODO: взять переменную из стора */

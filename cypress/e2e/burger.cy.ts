@@ -1,120 +1,100 @@
-import ingredients from '../fixtures/ingredients.json';
-import user from '../fixtures/user.json';
+
 import order from '../fixtures/order.json';
 
 describe('тестируем приложение', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4000');
+    cy.visit('');
+    cy.fixture('constants.json').as('constants');
+    cy.fixture('ingredients.json').as('ingredients');
     cy.intercept('GET', '/api/ingredients', {
-      statusCode: 200,
-      body: ingredients
+      fixture: 'ingredients',
+      statusCode: 200
     }).as('getIngredients');
+    cy.wait('@getIngredients');
   });
   describe('тестируем управление ингридиентами', () => {
-    it('тестируем добавление ингредиента', () => {
-      cy.wait('@getIngredients');
-      const ingredient = cy
-        .get(`[data-cy-add='643d69a5c3f7b9001cfa093e']`)
-        .should('exist');
-
-      ingredient.find('button').contains('Добавить').click();
+    it('тестируем добавление ингредиента', function () {
+      cy.addIngredient(this.constants.ingredientId)
     });
-    it('тестируем добавления булки', () => {
-      cy.wait('@getIngredients');
-      const bun = cy
-        .get('[data-cy-add=643d69a5c3f7b9001cfa093c]')
-        .should('exist');
-      bun.find('button').contains('Добавить').click();
+    it('тестируем добавления булки', function () {
+      cy.addIngredient(this.constants.bunId)
     });
-    it('тестируем удаление ингредиента', () => {
-      cy.wait('@getIngredients');
-      const ingredient = cy
-        .get(`[data-cy-add='643d69a5c3f7b9001cfa093e']`)
-        .should('exist');
-      ingredient.find('button').contains('Добавить').click();
+    it('тестируем удаление ингредиента', function () {
+      cy.addIngredient(this.constants.ingredientId)
       const constructorIngredients = cy
-        .get(`[data-cy-constructor-ingredient='643d69a5c3f7b9001cfa093e']`)
+        .get(
+          `[data-cy-constructor-ingredient='${this.constants.ingredientId}']`
+        )
         .should('exist');
       constructorIngredients.find('span.constructor-element__action').click();
     });
   });
   describe('тестируем открытие модальных окон', () => {
-    it('тестируем открытие модального окна ингредиента', () => {
-      cy.wait('@getIngredients');
+    it('тестируем открытие модального окна ингредиента', function () {
       const ingredient = cy
-        .get(`[data-cy-add='643d69a5c3f7b9001cfa093e']`)
+        .get(`[data-cy-add='${this.constants.ingredientId}']`)
         .should('exist');
-      ingredient.get(`[data-cy-link='643d69a5c3f7b9001cfa093e']`).click();
+      ingredient.get(`[data-cy-link='${this.constants.ingredientId}']`).click();
     });
-    it('тестируем закрытие модального окна ингридиента по кнопке', () => {
-      cy.wait('@getIngredients');
+    it('тестируем закрытие модального окна ингридиента по кнопке', function () {
       const ingredient = cy
-        .get(`[data-cy-add='643d69a5c3f7b9001cfa093e']`)
+        .get(`[data-cy-add='${this.constants.ingredientId}']`)
         .should('exist');
       const modalIngredient = ingredient
-        .get(`[data-cy-link='643d69a5c3f7b9001cfa093e']`)
+        .get(`[data-cy-link='${this.constants.ingredientId}']`)
         .click();
-      modalIngredient.get(`[data-cy-close-button]`).click();
+      modalIngredient.get(`[${this.constants.closeButton}]`).click();
       modalIngredient.should('not.exist');
     });
-    it('тестируем закрытие модального окна ингридиента по оверлею', () => {
-      cy.wait('@getIngredients');
+    it('тестируем закрытие модального окна ингридиента по оверлею', function () {
       const ingredient = cy
-        .get(`[data-cy-add='643d69a5c3f7b9001cfa093e']`)
+        .get(`[data-cy-add='${this.constants.ingredientId}']`)
         .should('exist');
-      ingredient.get(`[data-cy-link='643d69a5c3f7b9001cfa093e']`).click();
+      ingredient.get(`[data-cy-link='${this.constants.ingredientId}']`).click();
       const modalIngredient = cy.get(`[data-cy-modal-content]`).should('exist');
-      cy.get(`[data-cy-close-overlay]`).click('top', { force: true });
+      cy.get(`[${this.constants.overlay}]`).click('top', { force: true });
       modalIngredient.should('not.exist');
     });
   });
   describe('тестируем пользовательский сценарий', () => {
-    // it('тестируем вход пользователя', () => {
-    //   cy.intercept('POST', 'https://norma.nomoreparties.space/api/auth/login', {
-    //     statusCode: 200,
-    //     body: user
-    //   }).as('loginUser');
-    //   cy.visit('http://localhost:4000/login');
-    //   cy.get('[data-cy=email]').type('kerzolys@gmail.com');
-    //   cy.get('[data-cy=password]').type('gfhjkm');
-    //   cy.get('[data-cy=submit]').click();
-    // });
-    it('тестируем авторизацию пользователя', () => {
-      const accessToken =
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZWFlOTg2MTE5ZDQ1MDAxYjUwNzllMSIsImlhdCI6MTcyNzYyMzk2NSwiZXhwIjoxNzI3NjI1MTY1fQ.OG3bbO_LvHoStguslF9dG_38Lox1UfPPXSsKWrLASkQ';
+    it('тестируем авторизацию пользователя', function () {
+      const accessToken = this.constants.token;
       cy.setCookie('accessToken', accessToken);
       cy.getCookie('accessToken').should('exist');
-      cy.visit('http://localhost:4000');
+      cy.visit('');
+      cy.fixture('user.json').as('user');
       cy.intercept('GET', '/api/auth/user', {
-        statusCode: 200,
-        body: user
+        fixture: 'user',
+        statusCode: 200
       }).as('getUser');
       cy.wait('@getUser');
-      const ingredient = cy
-        .get(`[data-cy-add='643d69a5c3f7b9001cfa093e']`)
-        .should('exist');
 
-      ingredient.find('button').contains('Добавить').click();
-      const bun = cy
-        .get('[data-cy-add=643d69a5c3f7b9001cfa093c]')
-        .should('exist');
-      bun.find('button').contains('Добавить').click();
+      cy.addIngredient(this.constants.ingredientId)
+      cy.addIngredient(this.constants.bunId)
 
       cy.get(`[data-cy='submitOrder']`).click();
-      cy.intercept('POST', 'https://norma.nomoreparties.space/api/orders', {
-        statusCode: 201,
-        body: order
-      }).as('orderBurger');
-      cy.get(`[data-cy-close-overlay]`).click('top', { force: true });
+      cy.fixture('order.json')
+        .as('order')
+        .then(() => {
+          cy.intercept('POST', '/api/orders', {
+            body: order,
+            statusCode: 201
+          }).as('orderBurger');
+          cy.get(`[${this.constants.overlay}]`).click('top', { force: true });
 
-      cy.wait('@orderBurger');
-      cy.get('[data-cy=order-number]').should('have.text', order.order.number);
-      cy.get(`[data-cy-close-button]`).click();
+          cy.wait('@orderBurger');
+          cy.get('[data-cy=order-number]').should(
+            'have.text',
+            order.order.number
+          );
+        });
+
+      cy.get(`[${this.constants.closeButton}]`).click();
       cy.get(
-        `[data-cy-constructor-ingredient='643d69a5c3f7b9001cfa093e']`
+        `[data-cy-constructor-ingredient='${this.constants.ingredientId}']`
       ).should('not.exist');
       cy.get(
-        `[data-cy-constructor-ingredient='643d69a5c3f7b9001cfa093e']`
+        `[data-cy-constructor-ingredient='${this.constants.bunId}']`
       ).should('not.exist');
     });
   });

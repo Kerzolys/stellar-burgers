@@ -144,7 +144,7 @@ describe('тестируем authSlice', () => {
         ...initialState,
         loading: false,
         isAuthenticated: false,
-        user: null,
+        user: null
       });
     });
     it('проверяем ошибку при выходе пользователя', async () => {
@@ -158,6 +158,6 @@ describe('тестируем authSlice', () => {
         loading: false,
         error: errorMsg
       });
-    })
+    });
   });
 });

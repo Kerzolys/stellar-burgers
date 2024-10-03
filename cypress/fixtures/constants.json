@@ -1,0 +1,7 @@
+{
+  "ingredientId": "643d69a5c3f7b9001cfa093e",
+  "bunId": "643d69a5c3f7b9001cfa093c",
+  "closeButton": "data-cy-close-button",
+  "overlay": "data-cy-close-overlay",
+  "token": "testToken"
+}

@@ -1,7 +1,7 @@
 {
   "success": true,
-  "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZWFlOTg2MTE5ZDQ1MDAxYjUwNzllMSIsImlhdCI6MTcyNzYxODA3OCwiZXhwIjoxNzI3NjE5Mjc4fQ.PdRW6aeyLGu-AGKm80Z9BHeubslp_09DffrYIpk5h_Q",
-  "refreshToken": "5d1c257c8d5fd2e7f6ceae5fe2604f6f0ee708792118328383f7d4209d4d855cbe2b65289ab895a5",
+  "accessToken": "testToken",
+  "refreshToken": "refreshTestToken",
   "user": {
       "email": "kerzolys@gmail.com",
       "name": "Gleb Khokhlov"
